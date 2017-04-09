@@ -1,0 +1,20 @@
+[{
+	"id": "1",
+	"naziv": "Baze podataka 2",
+	"profesor": "Sladjan Babarogic"	
+},
+{
+	"id": "2",
+	"naziv": "Fizicko projektovanje IS",
+	"profesor": "Nenad Anicic"
+},
+{
+	"id": "3",
+	"naziv": "Integrisana softverska resenja",
+	"profesor": "Milica Vuckovic"
+},
+{
+	"id": "4",
+	"naziv": "Napredno mobilno racunarstvo",
+	"profesor": "Miroslav Minovic"
+}]

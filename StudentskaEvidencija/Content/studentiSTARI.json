@@ -1,0 +1,83 @@
+[
+{
+	"id":"1",
+	"ime": "Ivana Marinkovic",
+	"indeks": "2014/3023",
+	"finansiranje": "budzet",
+	"smer": "ISIT",
+	"ispiti": "",
+	"slika": "/Content/slike/2.jpg"
+},
+{
+	"id":"2",
+	"ime": "Marko Jokic",
+	"indeks": "2014/3068",
+	"finansiranje": "samofinansiranje",
+	"smer": "Menadzment",
+	"ispiti": "",
+	"slika": "/Content/slike/35.jpg"
+},
+{
+	"id":"3",
+	"ime": "Milos Kosic",
+	"indeks": "2014/3128",
+	"finansiranje": "samofinansiranje",
+	"smer": "ISIT",
+	"ispiti": "",
+	"slika": "/Content/slike/71.jpg"
+},
+{
+	"id":"4",
+	"ime": "Milica Krstic",
+	"indeks": "2014/3024",
+	"finansiranje": "samofinansiranje",
+	"smer": "Menadzment",
+	"ispiti": "",
+	"slika": "/Content/slike/29.jpg"
+},
+{
+	"id":"5",
+	"ime": "Dejan Djordjevic",
+	"indeks": "2014/3130",
+	"finansiranje": "budzet",
+	"smer": "Menadzment",
+	"ispiti": "",
+	"slika": "/Content/slike/87.jpg"
+},
+{
+	"id":"6",
+	"ime": "Jelena Petrovic",
+	"indeks": "2014/3128",
+	"finansiranje": "samofinansiranje",
+	"smer": "ISIT",
+	"ispiti": "",
+	"slika": "/Content/slike/0.jpg"
+},
+{
+	"id":"7",
+	"ime": "Jovan Radivojevic",
+	"indeks": "2014/3072",
+	"finansiranje": "samofinansiranje",
+	"smer": "ISIT",
+	"ispiti": "",
+	"slika": "/Content/slike/90.jpg"
+},
+{
+	"id":"8",
+	"ime": "Marija Radisic",
+	"indeks": "2014/3469",
+	"finansiranje": "budzet",
+	"smer": "ISIT",
+	"ispiti": "",
+	"slika": "/Content/slike/15.jpg"
+},
+{
+	"id":"9",
+	"ime": "Nikola Manojlovic",
+	"indeks": "2014/3321",
+	"finansiranje": "samofinansiranje",
+	"smer": "Menadzment",
+	"ispiti": "",
+	"slika": "/Content/slike/55.jpg"
+}
+]

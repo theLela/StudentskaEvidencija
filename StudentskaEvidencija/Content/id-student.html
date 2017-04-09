@@ -1,0 +1,89 @@
+<dom-module id="id-student">
+
+	<style>
+	#slika {
+		padding-top: 20px;
+		padding-left: 20px;
+	}
+	#student {
+		height: 100px;
+		width: 100px;
+	}
+	#tekst {
+		padding-left: 10px;
+		padding-top: 5px;
+		float: left;
+	}
+	#drawer {
+		background-color: #eee;
+	}
+	#main {
+		
+	}
+	#panel {
+		max-width: 400px;
+		height: 200px;
+	}
+	#karta {
+		width: 400px;
+		height: 260px;
+		border: 1px solid #e8e8e8;
+	}
+	--paper-card-header
+		float: right;
+		color: blue;
+	}
+	
+	</style>
+
+	<template>
+		<link rel="import" href="/Content/bower_components/paper-card/paper-card.html">
+			<paper-card heading="Podaci o studentu" id="karta">
+			<div class="card-content">
+				<link rel="import" href="/Content/bower_components/paper-drawer-panel/paper-drawer-panel.html">
+				<paper-drawer-panel id="panel">
+					<link rel="import" href="/Content/bower_components/paper-header-panel/paper-header-panel.html">
+					<link rel="import" href="/Content/bower_components/paper-button/paper-button.html">
+
+					<paper-header-panel drawer id="drawer">
+						<div id="tekst">
+							<p>Ime i prezime: {{ime}}</p>
+							<p>Broj indeksa: {{indeks}}</p>
+							<p>Nacin finansiranja: {{finansiranje}}</p>
+							<p>Smer: {{smer}}</p>
+							<template is="dom-if" if="{{sadrzilink}}">
+								<p><paper-button on-tap="handleClick"><b>Podaci o ispitima</b></paper-button></p>
+							</template>
+						</div>						
+					</paper-header-panel>
+					<paper-header-panel main id="main">
+					<div id="slika"><img id="student" src="{{slika}}"></div>
+						
+					</paper-header-panel>
+				</paper-drawer-panel>
+			</div>
+		</paper-card>
+	</template>
+
+</dom-module>
+
+<script>
+Polymer({
+	is: "id-student",
+	properties: {
+		id: {type:String},
+		ime: {type:String},
+		indeks: {type:String},
+		finansiranje: {type:String},
+		smer: {type:String},
+		ispiti: {type:String},
+		slika: {type:String},
+		sadrzilink: {type: Boolean, value: false}
+	},
+	handleClick: function(){
+				var s = "/Ispiti/PrikaziIspite?studentId=" + this.id;
+				window.location=s;
+	}
+});
+</script>
+

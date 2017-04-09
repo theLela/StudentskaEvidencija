@@ -1,0 +1,110 @@
+<dom-module id="prikaz-predmeta">
+
+	<link rel="import" href="/Content/bower_components/iron-ajax/iron-ajax.html">
+	<link rel="import" href="/Content/bower_components/paper-button/paper-button.html">
+	<link rel="import" href="/Content/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+
+	<style>
+	table {
+    	border: 1px solid #e8e8e8;
+    	width: 85%;
+    	font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    	
+	}
+
+	th, td {
+	    text-align: left;
+	  	padding-left: 5px;
+
+	}
+
+	tr:nth-child(even){background-color: #f2f2f2}
+
+	th {
+	    background-color: #c8c8c8;
+	    color: white;
+	}
+
+	.dugme {
+		color: white;
+				background: #993399;
+	}
+	.dodaj {
+		margin-left: 300px;
+		padding: 10px;
+
+	}
+	.itemi{
+		
+	}
+
+	.profesor{
+		min-width: 180px;
+		max-width: 180px;
+		min-height: 10px;
+		font-size: 12px;
+		height: 10px;
+		padding-top: 2px;
+	}
+	</style>
+	<template>
+		<div>
+			<table>
+				<tr>
+					<th>Naziv predmeta</th>
+					<th>Smer</th>
+					<th>ESPB poeni</th>
+					<th>Profesori</th>
+					<th></th>
+					<th></th>
+				</tr>
+					<iron-ajax auto url="{{putanjadopredmetiprofesori}}" handle-as="json" last-response="{{predmetiprofesori}}"></iron-ajax>
+
+				<template is="dom-repeat" items="{{predmetiprofesori}}" as="predmetprofesori">
+				<tr>
+				    <td>{{predmetprofesori.predmet.naziv}}</td>
+				    <td>{{predmetprofesori.predmet.smer}}</td>
+				    <td>{{predmetprofesori.predmet.poeni}}</td>
+					<td>
+						<paper-dropdown-menu label="Profesori" vertical-align="bottom" horizontal-align="left">
+							<paper-listbox class="dropdown-content">
+							<div class="itemi">
+								<template is="dom-repeat" items="{{predmetprofesori.profesori}}" as="profesor">
+									<paper-item class="profesor">{{profesor.ime}}</paper-item><br>
+								</template>
+							</div>
+							</paper-listbox>
+						</paper-dropdown-menu>
+					</td>
+					<td><paper-button class="dugme" on-click="IzmeniPredmet" data-args$="{{predmetprofesori.predmet.predmetid}}">Izmeni</paper-button></td>
+					<td><paper-button class="dugme" on-click="ObrisiPredmet" data-args$="{{predmetprofesori.predmet.predmetid}}">Obrisi</paper-button></td>
+				</tr>
+				</template>
+			</table>
+			<p class="dodaj">
+				<paper-button class="dugme" on-click="ViewDodajPredmet">Dodaj</paper-button>
+			</p>
+		</div>
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: "prikaz-predmeta",
+		properties: {
+			putanjadopredmetiprofesori: {type: String}
+		},
+		IzmeniPredmet: function(e){
+			var predmetid = e.target.dataset.args;
+			window.location = "/Predmeti/IzmeniPredmet?predmetId=" + predmetid;
+		},
+		ObrisiPredmet: function(e){
+			var predmetid = e.target.dataset.args;
+			window.location = "/Predmeti/ObrisiPredmet?predmetId=" + predmetid;
+		},
+		ViewDodajPredmet: function(){
+			window.location = "/Predmeti/DodajPredmet";
+		}
+	})
+</script>

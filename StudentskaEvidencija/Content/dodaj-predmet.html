@@ -1,0 +1,184 @@
+<dom-module id="dodaj-predmet">
+
+	<link rel="import" href="/Content/bower_components/iron-ajax/iron-ajax.html">
+		<link rel="import" href="/Content/bower_components/paper-button/paper-button.html">
+		<link rel="import" href="/Content/bower_components/paper-menu/paper-menu.html">
+
+
+	<style>
+	.pano {
+		background-color: #e8e8e8;
+		border: 2px solid #993399;
+		padding: 10px;
+		width:500px;
+	}
+
+	.dugme {
+		color: white;
+		background: #993399;
+	}
+
+	.greska {
+		color: red;
+	}
+	</style>
+
+	<template>
+		<div class="pano">
+
+			<iron-ajax auto url="{{putanjadosmerova}}" handle-as="json" last-response="{{ smerovi }}" on-response="smeroviUcitani"></iron-ajax>
+			<iron-ajax auto url="{{putanjadoprofesora}}" handle-as="json" last-response="{{ profesori }}" on-response="profesoriUcitani"></iron-ajax>
+			<iron-ajax auto url="{{putanjadopredmeta}}" handle-as="json" last-response="{{ predmet }}" on-response="predmetUcitan"></iron-ajax>
+
+			<p> Naziv predmeta: 
+				<input value="{{predmet.predmet.naziv::input}}">
+				<span class="greska"> {{porukaPredmetPrazan}} </span>
+			</p>
+			<p> Smer:
+				<select on-change="smerIzabran" value="{{predmet.predmet.smer}}">
+					<template is="dom-repeat" items= "{{smerovi}}" as="smer">
+						<option value="{{smer.smerid}}">
+							{{smer.nazivsmera}}
+						</option>
+					</template>
+				</select>
+			</p>
+			<p> ESPB poeni:
+				<input value="{{predmet.predmet.poeni::input}}">
+				<span class="greska"> {{porukaPoeniPrazni}} </span>
+			</p>
+			<p> Profesori:
+				<paper-menu id="meniProfesori" multi role="menu" on-iron-select="meniKliknut" on-iron-deselect="meniKliknut">
+					<template is="dom-repeat" items="{{profesori}}" as="profesor">
+				  		<paper-item>{{profesor.ime}}</paper-item>
+				    </template>
+				</paper-menu>
+			</p>
+			<p>
+				<paper-button class="dugme" on-tap="dugmeKlik">{{nazivdugmeta}}</paper-button>
+			</p>
+		</div>
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: "dodaj-predmet",
+
+		properties: {
+			putanjadosmerova: {type: String},
+			putanjadoprofesora: {type: String},
+			putanjadopredmeta: {type: String},
+			izabranSmerId: {type: Number},
+			nazivmetode: {type: String},
+			nazivdugmeta: {type: String},
+			profesoriSpremni: { type: String, value: false},
+			predmetSpreman: { type: String, value: false},
+			smeroviSpremni: { type: String, value: false},
+			porukaPredmetPrazan: {type: String},
+			porukaPoeniPrazni: {type: String}
+		},
+
+		predmetUcitan: function()
+		{
+			this.predmetSpreman = true;
+
+			if(this.predmetSpreman == true && this.profesoriSpremni == true && this.smeroviSpremni == true)
+				this.sveUcitano();
+		},
+
+		profesoriUcitani: function()
+		{
+			this.profesoriSpremni = true;
+
+			if(this.predmetSpreman == true && this.profesoriSpremni == true && this.smeroviSpremni == true)
+				this.sveUcitano();
+		},
+
+		smeroviUcitani: function()
+		{
+			this.smeroviSpremni = true;
+
+			if(this.predmetSpreman == true && this.profesoriSpremni == true && this.smeroviSpremni == true)
+				this.sveUcitano();
+		},
+
+		sveUcitano: function()
+		{
+			console.log("Sve ucitano...");
+
+			var selektovaniIndexiProfesora = [];
+			var meniProfesori = document.getElementById("meniProfesori");
+			
+			this.izabraniIDsProfesora = [];
+
+			for (var i = 0 ; i < this.predmet.profesori.length; i++)
+			{
+				var idProfesora = this.predmet.profesori[i].id;
+
+				for (var j = 0; j < this.profesori.length; j++)
+				{
+					if (this.profesori[j].id == idProfesora)
+						break;
+				}
+				
+				selektovaniIndexiProfesora.push(j);
+				this.izabraniIDsProfesora.push(this.profesori[j].id);
+			}
+
+			meniProfesori.selectedValues = selektovaniIndexiProfesora;
+			this.izabranSmerId = this.predmet.predmet.smer;
+		},
+
+		smerIzabran: function(e) {
+			this.izabranSmerId = this.smerovi[e.target.selectedIndex].smerid;
+		},
+
+		meniKliknut: function(e)
+		{
+			this.izabraniIDsProfesora = [];
+
+			var selektovaniIndeksi = e.target.selectedValues;
+			for (var i = 0; i < selektovaniIndeksi.length; i++)
+			{
+				this.izabraniIDsProfesora.push(this.profesori[selektovaniIndeksi[i]].id);
+			}
+		},
+
+		profesorSelektovan: function()
+		{
+			return true;
+		},
+
+		dugmeKlik: function()
+		{
+			if(this.predmet.predmet.naziv == "")
+				this.porukaPredmetPrazan = "Niste uneli naziv predmeta.";
+			else
+				this.porukaPredmetPrazan = "";
+
+			if(this.predmet.predmet.poeni == "")
+				this.porukaPoeniPrazni = "Niste uneli poene.";
+			else
+				this.porukaPoeniPrazni = "";
+
+			if(this.porukaPredmetPrazan == "" && this.porukaPoeniPrazni == ""){
+				
+				if(this.nazivmetode == "/Predmeti/SacuvajPredmet") {
+						window.location = this.nazivmetode + "?nazivPredmeta=" + this.predmet.predmet.naziv +
+														   "&smerId=" + this.izabranSmerId +
+														   "&poeni=" + this.predmet.predmet.poeni +
+														   "&idsProfesora=" + this.izabraniIDsProfesora;
+				} 
+				else {
+					window.location = this.nazivmetode + "?predmetId=" + this.predmet.predmet.predmetid +
+					   "&nazivPredmeta=" + this.predmet.predmet.naziv +
+					   "&smerId=" + this.izabranSmerId +
+					   "&poeni=" + this.predmet.predmet.poeni +
+					   "&idsProfesora=" + this.izabraniIDsProfesora;
+				}
+			}
+			
+		}
+	});
+</script>

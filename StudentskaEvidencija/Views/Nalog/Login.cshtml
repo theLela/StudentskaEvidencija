@@ -1,0 +1,31 @@
+﻿@model StudentskaEvidencija.Models.Korisnik
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!doctype html>
+<html>
+<body class="vertical layout">
+	<script src="/Content/bower_components/webcomponentsjs/webcomponents.js"></script>
+	<link rel="import" href="/Content/bower_components/polymer/polymer.html">
+	<link rel="import" href="/Content/log-in.html">
+
+	<link rel="import" href="/Content/bower_components/paper-toolbar/paper-toolbar.html">
+	<paper-toolbar class="toolbar"><div>Studentska Evidencija</div></paper-toolbar>
+
+	<style>
+	.toolbar{
+		background-color: #993399; 
+		color:#c8c8c8; 
+		font-size:40px;
+		padding-left: 450px;
+	}
+	</style>
+
+	<div style="position:absolute; top:150px; margin-left:500px">
+		<log-in message="@ViewBag.porukaGreske"></log-in>
+	</div>
+	
+</body>
+</html>

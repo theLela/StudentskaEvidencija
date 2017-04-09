@@ -1,0 +1,20 @@
+[
+{
+	"predmet": "Baze podataka 2",
+	"datum": "16.1.2015.",
+	"profesor": "Sladjan Babrogic",
+	"ocena": "10"
+},
+{
+	"predmet": "Fizicko projektovanje IS u izabranom softverskom okruzenju",
+	"datum": "25.1.2015.",
+	"profesor": "Nenad Anicic",
+	"ocena": "9"
+},
+{
+	"predmet": "Integrisana softverska resenja",
+	"datum": "27.6.2015.",
+	"profesor": "Milica Vuckovic",
+	"ocena": "10"
+}
+]

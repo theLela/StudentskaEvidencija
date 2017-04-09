@@ -1,0 +1,86 @@
+<dom-module id="student-ispiti">
+
+<link rel="import" href="/Content/bower_components/iron-ajax/iron-ajax.html">
+
+	<style>
+	table {
+    	border: 1px solid #e8e8e8;
+    	width: 100%;
+    	
+	}
+
+	th, td {
+	    text-align: left;
+	    padding: 8px;
+	}
+
+	tr:nth-child(even){background-color: #f2f2f2}
+
+	th {
+	    background-color: #c8c8c8;
+	    color: white;
+	}
+
+	.dugme {
+		color: white;
+				background: #993399;
+	}
+
+	.dodaj {
+		padding: 10px;
+		margin-left: 300px;
+	}
+	</style>
+
+	<template>
+		<div>
+			<table>
+				<tr>
+					<th>Predmet</th>
+					<th>Datum polaganja</th>
+					<th>Profesor</th>
+					<th>Ocena</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<link rel="import" href="/Content/bower_components/paper-button/paper-button.html">
+				<iron-ajax auto url="{{putanjadoispita}}" handle-as="json" last-response="{{ ispiti }}"></iron-ajax>
+				<template is="dom-repeat" items="{{ ispiti }}" as="ispit">
+					<tr>
+						<td>{{ispit.predmet}}</td>
+						<td>{{ispit.datum}}</td>
+						<td>{{ispit.profesorime}}</td>
+						<td>{{ispit.ocena}}</td>
+						<td><paper-button class="dugme" on-click="IzmeniIspit" data-args$="{{ispit.predmetid}}">Izmeni</paper-button></td>
+						<td><paper-button class="dugme" on-click="ObrisiIspit" data-args$="{{ispit.predmetid}}">Obrisi</paper-button></td>
+					</tr>
+				</template>
+			</table>
+			<p class="dodaj">
+			<paper-button class="dugme" on-click="ViewDodajIspit">Dodaj</paper-button>
+			</p>
+
+		</div>
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: "student-ispiti",
+		properties: {
+			putanjadoispita: {type:String},
+			studentid: {type:String}
+		},
+		ViewDodajIspit: function(){
+			window.location = "/Ispiti/DodajIspit?studentId=" + this.studentid;
+		},
+		ObrisiIspit: function(e){
+			var predmetid = e.target.dataset.args;
+			window.location = "/Ispiti/ObrisiIspit?studentId=" + this.studentid + "&predmetid=" + predmetid;
+		},
+		IzmeniIspit: function(e){
+			var predmetid = e.target.dataset.args;
+			window.location = "/Ispiti/IzmeniIspit?studentId=" + this.studentid + "&predmetid=" + predmetid;
+		}
+	})
+</script>

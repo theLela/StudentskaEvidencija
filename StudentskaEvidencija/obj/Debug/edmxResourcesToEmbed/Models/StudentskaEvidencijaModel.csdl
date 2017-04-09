@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentskaEvidencijaModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="StudentskaEvidencijaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Ispits" EntityType="StudentskaEvidencijaModel.Ispit" />
+    <EntitySet Name="Korisniks" EntityType="StudentskaEvidencijaModel.Korisnik" />
+    <EntitySet Name="sysdiagrams" EntityType="StudentskaEvidencijaModel.sysdiagram" />
+    <EntitySet Name="Profesors" EntityType="StudentskaEvidencijaModel.Profesor" />
+    <EntitySet Name="Smers" EntityType="StudentskaEvidencijaModel.Smer" />
+    <EntitySet Name="Predmets" EntityType="StudentskaEvidencijaModel.Predmet" />
+    <AssociationSet Name="FK_Ispit_Predmet" Association="StudentskaEvidencijaModel.FK_Ispit_Predmet">
+      <End Role="Predmet" EntitySet="Predmets" />
+      <End Role="Ispit" EntitySet="Ispits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Predmet_Smer" Association="StudentskaEvidencijaModel.FK_Predmet_Smer">
+      <End Role="Smer" EntitySet="Smers" />
+      <End Role="Predmet" EntitySet="Predmets" />
+    </AssociationSet>
+    <AssociationSet Name="PredmetProfesor" Association="StudentskaEvidencijaModel.PredmetProfesor">
+      <End Role="Predmet" EntitySet="Predmets" />
+      <End Role="Profesor" EntitySet="Profesors" />
+    </AssociationSet>
+    <EntitySet Name="Students" EntityType="StudentskaEvidencijaModel.Student" />
+    <AssociationSet Name="FK_Ispit_Student" Association="StudentskaEvidencijaModel.FK_Ispit_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Ispit" EntitySet="Ispits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Smer" Association="StudentskaEvidencijaModel.FK_Student_Smer">
+      <End Role="Smer" EntitySet="Smers" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ispit_Profesor" Association="StudentskaEvidencijaModel.FK_Ispit_Profesor">
+      <End Role="Profesor" EntitySet="Profesors" />
+      <End Role="Ispit" EntitySet="Ispits" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Ispit">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="PredmetID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="PredmetID" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" />
+    <Property Name="Ocena" Type="Int32" />
+    <NavigationProperty Name="Predmet" Relationship="StudentskaEvidencijaModel.FK_Ispit_Predmet" FromRole="Ispit" ToRole="Predmet" />
+    <NavigationProperty Name="Student" Relationship="StudentskaEvidencijaModel.FK_Ispit_Student" FromRole="Ispit" ToRole="Student" />
+    <Property Type="Int32" Name="ProfesorID" Nullable="false" />
+    <NavigationProperty Name="Profesor" Relationship="StudentskaEvidencijaModel.FK_Ispit_Profesor" FromRole="Ispit" ToRole="Profesor" />
+  </EntityType>
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="KorisnikID" />
+    </Key>
+    <Property Name="KorisnikID" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="KorisnickoIme" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Lozinka" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Profesor">
+    <Key>
+      <PropertyRef Name="ProfesorID" />
+    </Key>
+    <Property Type="Int32" Name="ProfesorID" Nullable="false" />
+    <Property Type="String" Name="ImePrezime" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="GodinaZaposlenja" />
+    <NavigationProperty Name="Predmets" Relationship="StudentskaEvidencijaModel.PredmetProfesor" FromRole="Profesor" ToRole="Predmet" />
+    <NavigationProperty Name="Ispits" Relationship="StudentskaEvidencijaModel.FK_Ispit_Profesor" FromRole="Profesor" ToRole="Ispit" />
+  </EntityType>
+  <EntityType Name="Smer">
+    <Key>
+      <PropertyRef Name="SmerID" />
+    </Key>
+    <Property Type="Int32" Name="SmerID" Nullable="false" />
+    <Property Type="String" Name="NazivSmera" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Predmets" Relationship="StudentskaEvidencijaModel.FK_Predmet_Smer" FromRole="Smer" ToRole="Predmet" />
+    <NavigationProperty Name="Students" Relationship="StudentskaEvidencijaModel.FK_Student_Smer" FromRole="Smer" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Predmet">
+    <Key>
+      <PropertyRef Name="PredmetID" />
+    </Key>
+    <Property Type="Int32" Name="PredmetID" Nullable="false" />
+    <Property Type="String" Name="NazivPredmeta" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="SmerID" Nullable="false" />
+    <NavigationProperty Name="Ispits" Relationship="StudentskaEvidencijaModel.FK_Ispit_Predmet" FromRole="Predmet" ToRole="Ispit" />
+    <NavigationProperty Name="Smer" Relationship="StudentskaEvidencijaModel.FK_Predmet_Smer" FromRole="Predmet" ToRole="Smer" />
+    <NavigationProperty Name="Profesors" Relationship="StudentskaEvidencijaModel.PredmetProfesor" FromRole="Predmet" ToRole="Profesor" />
+    <Property Type="Int32" Name="Poeni" />
+  </EntityType>
+  <Association Name="FK_Ispit_Predmet">
+    <End Type="StudentskaEvidencijaModel.Predmet" Role="Predmet" Multiplicity="1" />
+    <End Type="StudentskaEvidencijaModel.Ispit" Role="Ispit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Predmet">
+        <PropertyRef Name="PredmetID" />
+      </Principal>
+      <Dependent Role="Ispit">
+        <PropertyRef Name="PredmetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Predmet_Smer">
+    <End Type="StudentskaEvidencijaModel.Smer" Role="Smer" Multiplicity="1" />
+    <End Type="StudentskaEvidencijaModel.Predmet" Role="Predmet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Smer">
+        <PropertyRef Name="SmerID" />
+      </Principal>
+      <Dependent Role="Predmet">
+        <PropertyRef Name="SmerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PredmetProfesor">
+    <End Type="StudentskaEvidencijaModel.Predmet" Role="Predmet" Multiplicity="*" />
+    <End Type="StudentskaEvidencijaModel.Profesor" Role="Profesor" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="ImePrezime" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="BrojIndeksa" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Finansiranje" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Slika" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="SmerID" Nullable="false" />
+    <NavigationProperty Name="Ispits" Relationship="StudentskaEvidencijaModel.FK_Ispit_Student" FromRole="Student" ToRole="Ispit" />
+    <NavigationProperty Name="Smer" Relationship="StudentskaEvidencijaModel.FK_Student_Smer" FromRole="Student" ToRole="Smer" />
+  </EntityType>
+  <Association Name="FK_Ispit_Student">
+    <End Type="StudentskaEvidencijaModel.Student" Role="Student" Multiplicity="1" />
+    <End Type="StudentskaEvidencijaModel.Ispit" Role="Ispit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Ispit">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Smer">
+    <End Type="StudentskaEvidencijaModel.Smer" Role="Smer" Multiplicity="1" />
+    <End Type="StudentskaEvidencijaModel.Student" Role="Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Smer">
+        <PropertyRef Name="SmerID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SmerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ispit_Profesor">
+    <End Type="StudentskaEvidencijaModel.Profesor" Role="Profesor" Multiplicity="1" />
+    <End Type="StudentskaEvidencijaModel.Ispit" Role="Ispit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profesor">
+        <PropertyRef Name="ProfesorID" />
+      </Principal>
+      <Dependent Role="Ispit">
+        <PropertyRef Name="ProfesorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

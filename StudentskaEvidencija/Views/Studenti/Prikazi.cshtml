@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Prikazi";
+}
+
+<!doctype html>
+<html>
+<body class="vertical layout">
+	<script src="/Content/bower_components/webcomponentsjs/webcomponents.js"></script>
+	<link rel="import" href="/Content/bower_components/polymer/polymer.html">
+	<link rel="import" href="/Content/id-studenti.html">
+    <link rel="import" href="/Content/bower_components/paper-button/paper-button.html">
+
+    <style>
+		.toolbar{
+			font-size: 40px;
+			padding-left: 380px;
+		}
+		
+		a.linkovi:link {
+		    color: white;
+		    text-decoration:none;
+		}
+		a.linkovi:visited {
+		    color: white;
+		    text-decoration:none;
+		}
+		a.linkovi:hover {
+		    color: hotpink;
+		    text-decoration:none;
+		}
+		a.linkovi:active {
+		    color: white;
+		    text-decoration:none;
+		}
+		
+		.dugme {
+		    color: white;
+		    background: #993399;
+		    padding: 10px;	
+		    border-radius: 5px 5px 5px 5px;
+		    text-transform: uppercase;	    
+		    cursor: pointer;
+		}
+		
+		.pretraga {
+		    padding: 10px 30px 10px 10px;
+		    border: 1px solid #c0c0c0;
+		    text-align:right; 
+		    font-size:15px;
+		}
+		
+		input {
+	        padding: 10px;
+	        color: #212121;
+	        border: 1px solid #d2d2d2;
+	        border-radius: 2px 2px 2px 2px;
+	        width:250px;
+        }
+	</style>
+
+	<link rel="import" href="/Content/bower_components/paper-drawer-panel/paper-drawer-panel.html">
+	<paper-drawer-panel drawer-width="130px">
+	
+		<link rel="import" href="/Content/bower_components/paper-header-panel/paper-header-panel.html">
+		<paper-header-panel drawer style="background: #993399">
+			<link rel="import" href="/Content/bower_components/paper-toolbar/paper-toolbar.html">
+			<paper-toolbar class="toolbar"></paper-toolbar>
+
+			<link rel="import" href="/Content/bower_components/paper-menu/paper-menu.html">
+			<paper-menu style="background: #993399; color: white">
+				<link rel="import" href="/Content/bower_components/paper-item/paper-item.html">
+				<a class="linkovi" href="/Studenti/Prikazi">
+				    <paper-item>Studenti</paper-item>
+                </a>
+				 <a class="linkovi" href="/Predmeti/PrikaziPredmete">
+				    <paper-item>Predmeti</paper-item>
+                </a>
+			</paper-menu>
+
+		</paper-header-panel>
+
+		<paper-header-panel main>
+			<paper-toolbar class="toolbar"><div>Studentska Evidencija</div></paper-toolbar>
+            <div class="pretraga">
+                Unesi broj indeksa: <input id="inputIndeks" type="text" placeholder="godina/broj"/>
+                <button class="dugme" onclick="pronadjiStudenta()"> Pretrazi </button>
+            </div>
+            <id-studenti putanja="/Content/studenti.json"></id-studenti>
+		</paper-header-panel>
+	</paper-drawer-panel>
+
+    <script>
+        function pronadjiStudenta() {
+            var brojIndeksa = document.getElementById("inputIndeks").value;
+            window.location = "/Ispiti/PrikaziIspitePoIndeksu?index=" + brojIndeksa;
+    	}
+    </script>
+
+</body>
+</html>

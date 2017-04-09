@@ -1,0 +1,34 @@
+<dom-module id="id-studenti">
+
+	<link rel="import" href="/Content/id-student.html">
+	<link rel="import" href="/Content/bower_components/iron-ajax/iron-ajax.html">
+
+	<style>
+
+	</style>
+
+	<template>
+		<iron-ajax auto url="{{putanja}}" handle-as="json" last-response="{{ studenti }}"></iron-ajax>
+		<template is="dom-repeat" items="{{ studenti }}" as="student">
+			<id-student
+				id= "{{student.id}}"
+				ime= "{{ student.ime }}"
+				indeks= "{{ student.indeks }}"
+				finansiranje= "{{ student.finansiranje }}"
+				smer= "{{ student.smer }}"
+				ispiti= "{{ student.ispiti }}"
+				slika= "{{ student.slika }}"
+				sadrzilink
+			</id-student>
+		</template>
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: "id-studenti",
+		properties: {
+			putanja: {type:String}
+		}
+	});
+</script>

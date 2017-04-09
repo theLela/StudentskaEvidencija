@@ -1,0 +1,44 @@
+<dom-module id="log-in">
+		<style>
+			#dugme{
+				color: white;
+				background: #993399;
+			}
+			.pano{
+				background-color: #e8e8e8;
+				border: 2px solid #993399;
+				padding: 10px;
+				width:300px;
+			}
+			.error {
+				color: red;
+			}
+		</style>
+
+		<template>
+			<div class="pano">
+				<link rel="import" href="/Content/bower_components/paper-input/paper-input.html">
+				<paper-input label="Korisnicko ime" value="{{username}}"></paper-input>
+				<paper-input label="Lozinka" type="password" value="{{password}}"></paper-input>
+
+				<link rel="import" href="/Content/bower_components/paper-button/paper-button.html">
+				<p align="center"><paper-button id="dugme" on-tap="handleClick">Uloguj se</paper-button></p>
+				<p class="error">{{message}}</p>
+    		<div>
+		</template>
+</dom-module>
+
+	<script>
+		Polymer({
+			is: "log-in",
+			properties: {
+				username: {type: String},
+				password: {type: String},
+				message: {type: String}
+			},
+			handleClick: function(){
+				var s = "/Nalog/Proveri?username=" + this.username + "&password=" + this.password;
+				window.location=s;
+			}
+		});
+	</script>

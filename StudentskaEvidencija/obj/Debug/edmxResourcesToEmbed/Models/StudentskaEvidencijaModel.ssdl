@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentskaEvidencijaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="StudentskaEvidencijaModelStoreContainer">
+    <EntitySet Name="Ispit" EntityType="StudentskaEvidencijaModel.Store.Ispit" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Korisnik" EntityType="StudentskaEvidencijaModel.Store.Korisnik" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Predmet" EntityType="StudentskaEvidencijaModel.Store.Predmet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PredmetProfesor" EntityType="StudentskaEvidencijaModel.Store.PredmetProfesor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Profesor" EntityType="StudentskaEvidencijaModel.Store.Profesor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Smer" EntityType="StudentskaEvidencijaModel.Store.Smer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Student" EntityType="StudentskaEvidencijaModel.Store.Student" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="StudentskaEvidencijaModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Ispit_Predmet" Association="StudentskaEvidencijaModel.Store.FK_Ispit_Predmet">
+      <End Role="Predmet" EntitySet="Predmet" />
+      <End Role="Ispit" EntitySet="Ispit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ispit_Profesor" Association="StudentskaEvidencijaModel.Store.FK_Ispit_Profesor">
+      <End Role="Profesor" EntitySet="Profesor" />
+      <End Role="Ispit" EntitySet="Ispit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ispit_Student" Association="StudentskaEvidencijaModel.Store.FK_Ispit_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Ispit" EntitySet="Ispit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Predmet_Smer" Association="StudentskaEvidencijaModel.Store.FK_Predmet_Smer">
+      <End Role="Smer" EntitySet="Smer" />
+      <End Role="Predmet" EntitySet="Predmet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PredmetProfesor_Predmet" Association="StudentskaEvidencijaModel.Store.FK_PredmetProfesor_Predmet">
+      <End Role="Predmet" EntitySet="Predmet" />
+      <End Role="PredmetProfesor" EntitySet="PredmetProfesor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PredmetProfesor_Profesor" Association="StudentskaEvidencijaModel.Store.FK_PredmetProfesor_Profesor">
+      <End Role="Profesor" EntitySet="Profesor" />
+      <End Role="PredmetProfesor" EntitySet="PredmetProfesor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Smer" Association="StudentskaEvidencijaModel.Store.FK_Student_Smer">
+      <End Role="Smer" EntitySet="Smer" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Ispit">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="PredmetID" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="PredmetID" Type="int" Nullable="false" />
+    <Property Name="Datum" Type="date" />
+    <Property Name="Ocena" Type="int" />
+    <Property Name="ProfesorID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="KorisnikID" />
+    </Key>
+    <Property Name="KorisnikID" Type="int" Nullable="false" />
+    <Property Name="Ime" Type="nvarchar" MaxLength="50" />
+    <Property Name="Prezime" Type="nvarchar" MaxLength="50" />
+    <Property Name="KorisnickoIme" Type="nvarchar" MaxLength="50" />
+    <Property Name="Lozinka" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Predmet">
+    <Key>
+      <PropertyRef Name="PredmetID" />
+    </Key>
+    <Property Name="PredmetID" Type="int" Nullable="false" />
+    <Property Name="NazivPredmeta" Type="nvarchar" MaxLength="50" />
+    <Property Name="SmerID" Type="int" Nullable="false" />
+    <Property Name="Poeni" Type="int" />
+  </EntityType>
+  <EntityType Name="PredmetProfesor">
+    <Key>
+      <PropertyRef Name="PredmetID" />
+      <PropertyRef Name="ProfesorID" />
+    </Key>
+    <Property Name="PredmetID" Type="int" Nullable="false" />
+    <Property Name="ProfesorID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Profesor">
+    <Key>
+      <PropertyRef Name="ProfesorID" />
+    </Key>
+    <Property Name="ProfesorID" Type="int" Nullable="false" />
+    <Property Name="ImePrezime" Type="nvarchar" MaxLength="50" />
+    <Property Name="GodinaZaposlenja" Type="int" />
+  </EntityType>
+  <EntityType Name="Smer">
+    <Key>
+      <PropertyRef Name="SmerID" />
+    </Key>
+    <Property Name="SmerID" Type="int" Nullable="false" />
+    <Property Name="NazivSmera" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="ImePrezime" Type="nvarchar" MaxLength="50" />
+    <Property Name="BrojIndeksa" Type="nvarchar" MaxLength="50" />
+    <Property Name="Finansiranje" Type="nvarchar" MaxLength="50" />
+    <Property Name="Slika" Type="nvarchar" MaxLength="50" />
+    <Property Name="SmerID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Ispit_Predmet">
+    <End Role="Predmet" Type="StudentskaEvidencijaModel.Store.Predmet" Multiplicity="1" />
+    <End Role="Ispit" Type="StudentskaEvidencijaModel.Store.Ispit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Predmet">
+        <PropertyRef Name="PredmetID" />
+      </Principal>
+      <Dependent Role="Ispit">
+        <PropertyRef Name="PredmetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ispit_Profesor">
+    <End Role="Profesor" Type="StudentskaEvidencijaModel.Store.Profesor" Multiplicity="1" />
+    <End Role="Ispit" Type="StudentskaEvidencijaModel.Store.Ispit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profesor">
+        <PropertyRef Name="ProfesorID" />
+      </Principal>
+      <Dependent Role="Ispit">
+        <PropertyRef Name="ProfesorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ispit_Student">
+    <End Role="Student" Type="StudentskaEvidencijaModel.Store.Student" Multiplicity="1" />
+    <End Role="Ispit" Type="StudentskaEvidencijaModel.Store.Ispit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Ispit">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Predmet_Smer">
+    <End Role="Smer" Type="StudentskaEvidencijaModel.Store.Smer" Multiplicity="1" />
+    <End Role="Predmet" Type="StudentskaEvidencijaModel.Store.Predmet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Smer">
+        <PropertyRef Name="SmerID" />
+      </Principal>
+      <Dependent Role="Predmet">
+        <PropertyRef Name="SmerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PredmetProfesor_Predmet">
+    <End Role="Predmet" Type="StudentskaEvidencijaModel.Store.Predmet" Multiplicity="1" />
+    <End Role="PredmetProfesor" Type="StudentskaEvidencijaModel.Store.PredmetProfesor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Predmet">
+        <PropertyRef Name="PredmetID" />
+      </Principal>
+      <Dependent Role="PredmetProfesor">
+        <PropertyRef Name="PredmetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PredmetProfesor_Profesor">
+    <End Role="Profesor" Type="StudentskaEvidencijaModel.Store.Profesor" Multiplicity="1" />
+    <End Role="PredmetProfesor" Type="StudentskaEvidencijaModel.Store.PredmetProfesor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profesor">
+        <PropertyRef Name="ProfesorID" />
+      </Principal>
+      <Dependent Role="PredmetProfesor">
+        <PropertyRef Name="ProfesorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Smer">
+    <End Role="Smer" Type="StudentskaEvidencijaModel.Store.Smer" Multiplicity="1" />
+    <End Role="Student" Type="StudentskaEvidencijaModel.Store.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Smer">
+        <PropertyRef Name="SmerID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SmerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+</Schema>

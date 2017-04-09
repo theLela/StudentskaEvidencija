@@ -1,0 +1,131 @@
+<dom-module id="dodaj-ispit">
+
+	<link rel="import" href="/Content/bower_components/iron-ajax/iron-ajax.html">
+	<link rel="import" href="/Content/bower_components/paper-input/paper-input.html">
+	<link rel="import" href="/Content/bower_components/paper-button/paper-button.html">
+
+	<style>
+	.pano {
+		background-color: #e8e8e8;
+		border: 2px solid #993399;
+		padding: 10px;
+		width:500px;
+	}
+
+	.dugme {
+		color: white;
+		background: #993399;
+	}
+
+	.greska {
+		color: red;
+	}
+	</style>
+
+	<template>
+
+		<div class="pano">
+
+			<iron-ajax auto url="{{putanjadopredmeta}}" handle-as="json" last-response="{{ predmeti }}" on-response="predmetiUcitani"></iron-ajax>
+			<iron-ajax auto url="{{putanjadoispita}}" handle-as="json" last-response="{{ ispit }}"></iron-ajax>
+		    
+			<p> Predmet: 
+				<select on-change="predmetIzabran" value="{{ispit.predmetid}}">
+					<template is="dom-repeat" items="{{ predmeti }}" as="predmet">
+						<option value="{{predmet.predmet.predmetid}}">
+							{{predmet.predmet.naziv}}
+						</option>
+					</template>				
+				</select>
+				<span class="greska">{{porukaPredmetPrazan}}</span>
+			</p>
+
+			<p>Datum: <input type="date" value="{{ispit.datum::input}}">
+				<span class="greska">{{porukaDatumPrazan}}</span>
+			</p>
+			<p>Profesor: 
+				<select on-change="profesorIzabran" value="{{ispit.profesorid}}">
+					<template is="dom-repeat" items="{{ profesori }}" as="profesor">
+						<option value="{{profesor.id}}">
+							{{profesor.ime}}
+						</option>
+					</template>				
+				</select>
+				<span class="greska">{{porukaProfesorPrazan}}</span>
+			 </p>
+			<p>Ocena: <input type="number" min="6" max="10" step="1" value="{{ispit.ocena::input}}">
+				<span class="greska">{{porukaOcenaPrazna}}</span>
+			</p>
+			<p align="center"><paper-button class="dugme" on-tap="dugmeKlik">{{nazivdugmeta}}</paper-button></p>
+		</div>
+
+		 
+	</template>
+</dom-module>
+
+<script>
+Polymer({
+	is: "dodaj-ispit",
+	properties: {
+		putanjadopredmeta: {type: String},
+		putanjadoispita: {type: String},
+		nazivmetode: { type: String },
+		nazivdugmeta: { type: String },
+		izabranIndexPredmeta: {type : Number },
+		porukaPredmetPrazan: { type: String },
+		porukaProfesorPrazan: { type: String },
+		porukaDatumPrazan: { type: String },
+		porukaOcenaPrazna: { type: String }
+	},
+
+	predmetIzabran: function(e){
+		this.izabranIndexPredmeta = e.target.selectedIndex;
+		this.profesori = this.predmeti[this.izabranIndexPredmeta].profesori;
+
+		this.set('ispit.predmetid', this.predmeti[this.izabranIndexPredmeta].predmet.predmetid);
+		this.set('ispit.profesorid', this.predmeti[this.izabranIndexPredmeta].profesori[0].id);
+
+		console.log(this.ispit);
+	},
+
+	profesorIzabran: function(e){
+		var izabranIndexProfesora = e.target.selectedIndex;
+		this.set('ispit.profesorid', this.predmeti[this.izabranIndexPredmeta].profesori[izabranIndexProfesora].id);
+	},
+
+	predmetiUcitani: function() {
+		this.profesori = this.predmeti[0].profesori;
+		this.izabranIndexPredmeta = 0;
+	},
+
+	dugmeKlik: function(){
+
+		if (this.ispit.predmetid == "")
+			this.porukaPredmetPrazan = "Niste izabrali predmet.";
+		else
+			this.porukaPredmetPrazan = "";
+		
+		if (this.ispit.datum == "")
+			this.porukaDatumPrazan = "Niste izabrali datum.";
+		else
+			this.porukaDatumPrazan = "";
+
+		if (this.ispit.profesorid == "")
+			this.porukaProfesorPrazan = "Niste izabrali profesora.";
+		else
+			this.porukaProfesorPrazan = "";
+
+		if (this.ispit.ocena == "")
+			this.porukaOcenaPrazna = "Niste izabrali ocenu.";
+		else
+			this.porukaOcenaPrazna = "";
+
+		if(this.ispit.predmetid != "" && this.ispit.datum != "" && this.ispit.profesorid != "" && this.ispit.ocena != "")
+			window.location =  this.nazivmetode + "?studentId=" + this.ispit.studentid + 
+								"&predmetId=" + this.ispit.predmetid +
+								"&ocena=" +this.ispit.ocena + 
+								"&datum=" + this.ispit.datum +
+								"&profesorId=" + this.ispit.profesorid;
+	}
+});
+</script>

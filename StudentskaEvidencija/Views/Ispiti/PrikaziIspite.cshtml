@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "PrikaziIspite";
+}
+
+<!doctype html>
+<html>
+<body class="vertical layout">
+	<script src="/Content/bower_components/webcomponentsjs/webcomponents.js"></script>
+	<link rel="import" href="/Content/bower_components/polymer/polymer.html">
+	<link rel="import" href="/Content/student-detalji.html">
+
+    	<style>
+		.toolbar{
+			font-size: 40px;
+			padding-left: 380px;
+		}
+		a.linkovi:link {
+		    color: white;
+		    text-decoration:none;
+		}
+		a.linkovi:visited {
+		    color: white;
+		    text-decoration:none;
+		}
+		a.linkovi:hover {
+		    color: hotpink;
+		    text-decoration:none;
+		}
+		a.linkovi:active {
+		    color: white;
+		    text-decoration:none;
+		}
+	</style>
+
+	<link rel="import" href="/Content/bower_components/paper-drawer-panel/paper-drawer-panel.html">
+	<paper-drawer-panel drawer-width="130px">
+	
+		<link rel="import" href="/Content/bower_components/paper-header-panel/paper-header-panel.html">
+		<paper-header-panel drawer style="background: #993399">
+			<link rel="import" href="/Content/bower_components/paper-toolbar/paper-toolbar.html">
+			<paper-toolbar class="toolbar"></paper-toolbar>
+
+			<link rel="import" href="/Content/bower_components/paper-menu/paper-menu.html">
+			<paper-menu style="background: #993399; color: white">
+				<link rel="import" href="/Content/bower_components/paper-item/paper-item.html">
+                <a class="linkovi" href="/Studenti/Prikazi">
+				    <paper-item>Studenti</paper-item>
+                </a>
+                <a class="linkovi" href="/Predmeti/PrikaziPredmete">
+				    <paper-item>Predmeti</paper-item>
+                </a>
+			</paper-menu>
+
+		</paper-header-panel>
+
+		<paper-header-panel main>
+			<paper-toolbar class="toolbar"><div>Studentska Evidencija</div></paper-toolbar>
+            <div style="padding: 20px">
+                <student-detalji
+                        studentid="@ViewBag.studentId"
+                        putanjadostudenta="/Content/student.json"
+                        putanjadoispita="/Content/ispiti.json">
+                 </student-detalji>
+             </div>
+		</paper-header-panel>
+	</paper-drawer-panel>
+   	
+</body>
+</html>

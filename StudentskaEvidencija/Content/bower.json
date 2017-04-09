@@ -1,0 +1,20 @@
+{
+  "name": "licna-karta",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~1.2.3",
+    "iron-elements": "polymerelements/iron-elements#~1.0.7",
+    "paper-elements": "polymerelements/paper-elements#~1.0.7"
+  }
+}
